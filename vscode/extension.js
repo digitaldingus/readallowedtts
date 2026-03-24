@@ -22,6 +22,10 @@ function activate(context) {
 
     // 2. Register Start Command
     let startCommand = vscode.commands.registerCommand('read-allowed.start', async () => {
+        if (currentVoiceProcess) {
+            stopSpeaking();
+            return;
+        }
 
         try {
             const editor = vscode.window.activeTextEditor;

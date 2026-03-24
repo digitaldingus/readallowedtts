@@ -1,4 +1,4 @@
-# ReadAllowed (Antigravity Extension)
+# ReadAllowed TTS (Antigravity Extension)
 
 High-performance Text-to-Speech assistant for the Antigravity IDE.
 
@@ -7,12 +7,13 @@ High-performance Text-to-Speech assistant for the Antigravity IDE.
 ## 🔊 **How to Use**
 
 ### 1. **Sidebar Panels / Chat Webviews** 
-- **Trigger**: Highlight text anywhere in the sidebar, and press **`Ctrl + Alt + S`** on your keyboard.
-- **Automation**: The extension automatically captures the highlight, reads it out loud, and invisibly restores your clipboards! No mouse clicks required.
+- **Start**: Highlight text anywhere in the sidebar and press **`Ctrl + Alt + S`** on your keyboard.
+- **Stop Anytime**: Pressing **`Ctrl + Alt + S`** again or clicking the Status bar icon instantly stops reading.
+- **Automation**: Automatically captures highlights, reads it out loud, and invisibly restores your clipboards without mouse blur!
 
 ### 2. **Code Files / Standard Documents**
-- **Trigger**: Highlight any sentence inside a Code Editor and press **`Ctrl + Alt + S`** (or click the position button at the bottom right).
-- **Icon Position**: Located in the Status Bar on the **bottom-right cluster** next to settings layouts.
+- **Trigger**: Highlight any sentence inside a Code Editor and press **`Ctrl + Alt + S`** (or click the bottom-right button).
+- **Fallback (Read Clipboard)**: Clicking the button without highlighting any text will read absolute whatever is currently in your Workspace Clipboard directly!
 
 ---
 

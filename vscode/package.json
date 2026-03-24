@@ -1,9 +1,9 @@
 {
   "name": "read-allowed",
-  "displayName": "ReadAllowed",
+  "displayName": "ReadAllowed TTS",
   "description": "Text-to-Speech for Antigravity panels. Use Ctrl+Alt+S to auto-read sidebar highlights, or click bottom-right to read clipboard.",
-  "version": "2.1.0",
-  "publisher": "Antigravity",
+  "version": "2.3.0",
+  "publisher": "digitaldingus",
   "engines": {
     "vscode": "^1.74.0"
   },
