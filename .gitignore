@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Bundles & Tests
+*.vsix
+.vscode-test/
+
+# OS Files
+.DS_Store
+Thumbs.db

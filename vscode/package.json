@@ -1,0 +1,79 @@
+{
+  "name": "read-allowed",
+  "displayName": "ReadAllowed",
+  "description": "Text-to-Speech for Antigravity panels. Use Ctrl+Alt+S to auto-read sidebar highlights, or click bottom-right to read clipboard.",
+  "version": "2.1.0",
+  "publisher": "Antigravity",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "keybindings": [
+      {
+        "command": "read-allowed.start",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
+      }
+    ],
+    "commands": [
+      {
+        "command": "read-allowed.start",
+        "title": "Start Speaking",
+        "icon": "$(debug-start)"
+      },
+      {
+        "command": "read-allowed.stop",
+        "title": "Stop Speaking",
+        "icon": "$(debug-stop)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "read-allowed.start",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "read-allowed.start",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "ReadAllowed",
+      "properties": {
+        "antigravity-tts.speed": {
+          "type": "integer",
+          "default": 0,
+          "minimum": -10,
+          "maximum": 10,
+          "description": "Rate of speech synthesis speed (-10 to 10)."
+        },
+        "antigravity-tts.voice": {
+          "type": "string",
+          "default": "",
+          "description": "The exact name of the installed voice (e.g., 'Microsoft David')."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Antigravity/read-allowed"
+  },
+  "scripts": {
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0"
+  }
+}

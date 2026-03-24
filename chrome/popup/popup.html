@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadAllowed</title>
+    <link rel="stylesheet" href="popup.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <span class="icon">📖</span>
+                <h1>ReadAllowed</h1>
+            </div>
+            <div class="status">
+                <span class="dot active"></span> Alive
+            </div>
+        </header>
+
+        <main>
+            <div class="info-card">
+                <p class="description">Activate reading mode or bridge with Antigravity App.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="label">Status</span>
+                        <span class="value" id="status-text">Disconnected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="btn-read" class="btn btn-primary">📖 Activate Read Mode</button>
+                <button id="btn-sync" class="btn btn-secondary">🔗 Sync to App</button>
+            </div>
+        </main>
+
+        <footer>
+            <span>v0.1.0 • Antigravity Ecosystem</span>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
