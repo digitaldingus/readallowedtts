@@ -15,7 +15,7 @@ function activate(context) {
     // 1. Setup Status Bar Controller (Universal rendering)
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.text = "$(megaphone) Read";
-    statusBarItem.tooltip = "ReadAllowed: Start Speaking Highlight or Clipboard";
+    statusBarItem.tooltip = "ReadAllowed: Click to Start Reading";
     statusBarItem.command = "read-allowed.start";
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
@@ -80,9 +80,16 @@ function activate(context) {
             stopSpeaking();
 
             // D. Get Configuration
-            const config = vscode.workspace.getConfiguration('ReadAllowed');
-            const speed = config.get('antigravity-tts.speed', 0);
-            const voice = config.get('antigravity-tts.voice', "");
+            const config = vscode.workspace.getConfiguration('read-allowed');
+            const speed = config.get('speed', 0);
+            const voice = config.get('voice', "");
+
+            // E. Assistive Mode State Readout
+            const isAssistive = config.get('assistiveMode', false) || vscode.workspace.getConfiguration('editor').get('accessibilitySupport') === 'on';
+            if (isAssistive) {
+                text = "Now reading selection. " + text;
+            }
+
 
             // E. Create Trigger & Spawn Speech
             speakText(text, speed, voice);
@@ -97,7 +104,52 @@ function activate(context) {
         stopSpeaking();
     });
 
-    context.subscriptions.push(startCommand, stopCommand);
+    // 4. Register Select Voice Command
+    let selectVoiceCommand = vscode.commands.registerCommand('read-allowed.selectVoice', async () => {
+        try {
+            const psScript = `
+                Add-Type -AssemblyName System.Speech;
+                $voice = New-Object System.Speech.Synthesis.SpeechSynthesizer;
+                $voice.GetInstalledVoices() | ForEach-Object { $_.VoiceInfo.Name }
+            `;
+            const encodedScript = Buffer.from(psScript, 'utf16le').toString('base64');
+
+            const res = cp.spawnSync('powershell.exe', [
+                '-NoProfile',
+                '-NonInteractive',
+                '-EncodedCommand',
+                encodedScript
+            ], { windowsHide: true });
+
+            if (res.error) {
+                throw new Error(res.error.message);
+            }
+
+            const stdout = res.stdout.toString().trim();
+            if (!stdout) {
+                vscode.window.showWarningMessage('No voices found on this machine.');
+                return;
+            }
+
+            const voices = stdout.split('\r\n').map(v => v.trim()).filter(v => v.length > 0);
+            
+            const selection = await vscode.window.showQuickPick(voices, {
+                placeHolder: 'Select a Voice for ReadAllowed',
+                title: 'Installed TTS Voices'
+            });
+
+            if (selection) {
+                const config = vscode.workspace.getConfiguration('read-allowed');
+                await config.update('voice', selection, vscode.ConfigurationTarget.Global);
+                vscode.window.showInformationMessage(`ReadAllowed: Voice set to ${selection}`);
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage('Error selecting voice: ' + error.message);
+        }
+    });
+
+    context.subscriptions.push(startCommand, stopCommand, selectVoiceCommand);
+
 }
 
 /**
@@ -136,6 +188,7 @@ function speakText(text, speed, voice) {
     // 5. Update UI Controller to "Stop"
     statusBarItem.text = `$(primitive-square) Stop`;
     statusBarItem.command = 'read-allowed.stop';
+    statusBarItem.tooltip = "Click to Stop Reading";
 
     // 6. Lifecycle Events
     currentVoiceProcess.on('exit', () => {
@@ -166,6 +219,7 @@ function resetUI() {
     if (statusBarItem) {
         statusBarItem.text = `$(megaphone) Read`;
         statusBarItem.command = 'read-allowed.start';
+        statusBarItem.tooltip = "ReadAllowed: Click to Start Reading";
     }
 }
 

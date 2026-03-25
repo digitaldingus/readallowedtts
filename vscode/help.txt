@@ -1,0 +1,19 @@
+Usage: ovsx publish [options] [extension.vsix]
+
+Publish an extension, packaging it first if necessary.
+
+Options:
+  -t, --target <targets...>     Target architectures
+  -i, --packagePath <paths...>  Publish the provided VSIX packages.
+  --baseContentUrl <url>        Prepend all relative links in README.md with
+                                this URL.
+  --baseImagesUrl <url>         Prepend all relative image links in README.md
+                                with this URL.
+  --yarn                        Use yarn instead of npm while packing extension
+                                files.
+  --pre-release                 Mark this package as a pre-release
+  --no-dependencies             Disable dependency detection via npm or yarn
+  --skip-duplicate              Fail silently if version already exists on the
+                                marketplace
+  --packageVersion <version>    Version of the provided VSIX packages.
+  -h, --help                    display help for command

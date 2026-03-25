@@ -1,0 +1,22 @@
+ WARNING  Neither a .vscodeignore file nor a "files" property in package.json was found. To ensure only necessary files are included in your extension, add a .vscodeignore file or specify the "files" property in package.json. More info: https://aka.ms/vscode-vscodeignore
+
+ INFO  Files included in the VSIX:
+read-allowed-2.3.8.vsix
+├─ [Content_Types].xml 
+├─ extension.vsixmanifest 
+└─ extension/
+   ├─ LICENSE.txt [1.04 KB]
+   ├─ extension.js [8.09 KB]
+   ├─ help.txt [0.97 KB]
+   ├─ out.txt [1.13 KB]
+   ├─ out_new.txt [1.11 KB]
+   ├─ package.json [2.18 KB]
+   ├─ package_out.txt [0.27 KB]
+   ├─ publish_out.txt [0.17 KB]
+   ├─ readme.md [1.99 KB]
+   ├─ assets/
+   │  └─ statusbar_button.png [1.5 KB]
+   └─ icons/
+      └─ 128.png [47.45 KB]
+
+ DONE  Packaged: C:\Users\Dingus\Documents\Antigravity\ReadAllowed\vscode\read-allowed-2.3.8.vsix (13 files, 56.56 KB)

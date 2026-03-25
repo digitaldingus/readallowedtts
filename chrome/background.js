@@ -1,30 +1,79 @@
-// background.js - Service Worker for ReadAllowed Extension
+// background.js - Service Worker for ReadAllowed TTS
 
-console.log("ReadAllowed Service Worker Initialized.");
+let isSpeaking = false;
 
-// 1. Handle Extension Installation/Updates
-chrome.runtime.onInstalled.addListener((details) => {
-  if (details.reason === "install") {
-    console.log("ReadAllowed Extension Installed!");
-    // Set default storage values if needed
-    chrome.storage.local.set({ enabled: true });
+console.log("ReadAllowed TTS Service Worker Initialized.");
+
+// 1. Handle Extension Installation
+chrome.runtime.onInstalled.addListener(() => {
+  console.log("ReadAllowed TTS Installed!");
+});
+
+// 2. Command Trigger (Mapped in manifest)
+chrome.commands.onCommand.addListener((command) => {
+  if (command === "read-highlight") {
+    if (isSpeaking) {
+      chrome.tts.stop();
+      isSpeaking = false;
+      return;
+    }
+
+    // Query active tab to pull Highlights
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "getSelection" }, (response) => {
+          if (chrome.runtime.lastError || !response || !response.text) {
+             console.log("No selection found or talk failed.");
+             return;
+          }
+          speak(response.text);
+        });
+      }
+    });
   }
 });
 
-// 2. Message Listener (from Content Script or Popup)
+// 3. Main Speak Generator
+function speak(text) {
+  if (!text || text.trim().length === 0) return;
+
+  isSpeaking = true;
+  
+  // Load settings from storage before speaking
+  chrome.storage.sync.get(['selectedVoice', 'selectedSpeed', 'assistiveMode'], (data) => {
+    const voice = data.selectedVoice || undefined;
+    const rate = Number.parseFloat(data.selectedSpeed) || 1.0;
+    const isAssistive = data.assistiveMode || false;
+
+    let textToSpeak = text;
+    if (isAssistive) {
+        textToSpeak = "Now speaking selection. " + text;
+    }
+
+    chrome.tts.speak(textToSpeak, {
+      voiceName: voice,
+      rate: rate,
+
+      enqueue: false, // Interrupt any current speech
+      onEvent: (event) => {
+        if (event.type === 'end' || event.type === 'interrupted' || event.type === 'error') {
+          isSpeaking = false;
+        }
+      }
+    });
+  });
+}
+
+
+// 4. Message Listener (from Popup)
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("Message received in background:", request);
-
-  if (request.action === "ping") {
-    sendResponse({ status: "pong", timestamp: Date.now() });
+  if (request.action === "speak") {
+    speak(request.text);
+    sendResponse({ status: "Speaking started" });
+  } else if (request.action === "stop") {
+    chrome.tts.stop();
+    isSpeaking = false;
+    sendResponse({ status: "Speaking stopped" });
   }
-
-  // Example: Forwarding to Native App (Antigravity Bridge)
-  if (request.action === "syncWithApp") {
-    // connectNative would be used here if the host is registered
-    // chrome.runtime.sendNativeMessage('com.antigravity.host', { text: request.text }, (response) => { ... });
-    sendResponse({ status: "Native Messaging logic placeholder triggered" });
-  }
-
-  return true; // Keep channel open for async response
+  return true; // Keep channel open
 });

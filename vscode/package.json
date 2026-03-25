@@ -1,8 +1,13 @@
 {
   "name": "read-allowed",
   "displayName": "ReadAllowed TTS",
-  "description": "Text-to-Speech for Antigravity panels. Use Ctrl+Alt+S to auto-read sidebar highlights, or click bottom-right to read clipboard.",
-  "version": "2.3.0",
+  "description": "High-performance TTS for Antigravity. Just highlight any text and click the Status Bar button (or press Ctrl+Alt+S) to read it instantly.",
+  "version": "2.4.1",
+
+
+
+
+  "icon": "icons/128.png",
   "publisher": "digitaldingus",
   "engines": {
     "vscode": "^1.74.0"
@@ -32,7 +37,13 @@
         "command": "read-allowed.stop",
         "title": "Stop Speaking",
         "icon": "$(debug-stop)"
+      },
+      {
+        "command": "read-allowed.selectVoice",
+        "title": "Select Voice",
+        "icon": "$(megaphone)"
       }
+
     ],
     "menus": {
       "view/title": [
@@ -51,24 +62,30 @@
     "configuration": {
       "title": "ReadAllowed",
       "properties": {
-        "antigravity-tts.speed": {
+        "read-allowed.speed": {
           "type": "integer",
           "default": 0,
           "minimum": -10,
           "maximum": 10,
           "description": "Rate of speech synthesis speed (-10 to 10)."
         },
-        "antigravity-tts.voice": {
+        "read-allowed.voice": {
           "type": "string",
           "default": "",
           "description": "The exact name of the installed voice (e.g., 'Microsoft David')."
+        },
+        "read-allowed.assistiveMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable audible alerts and automatic state readouts for assistive navigation."
         }
+
       }
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Antigravity/read-allowed"
+    "url": "https://github.com/digitaldingus/readallowedtts"
   },
   "scripts": {
     "package": "vsce package"

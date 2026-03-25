@@ -23,18 +23,42 @@
 
         <main>
             <div class="info-card">
-                <p class="description">Activate reading mode or bridge with Antigravity App.</p>
+                <p class="description">Highlight text on any page and press <b>Ctrl+Shift+S</b> to read aloud!</p>
                 <div class="stats">
                     <div class="stat-item">
                         <span class="label">Status</span>
-                        <span class="value" id="status-text">Disconnected</span>
+                        <span class="value" id="status-text">Ready</span>
+                    </div>
+                </div>
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 12px 0;">
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <label for="voice-select" class="label" style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px; display: block;">Voice</label>
+                        <select id="voice-select" class="input-select" style="background-color: var(--bg-color); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 4px; padding: 6px; font-size: 11px; width: 100%; cursor: pointer;">
+                            <option value="">Default System</option>
+                        </select>
+                    </div>
+                    <div class="setting-item" style="margin-top: 8px;">
+                        <label for="speed-slider" class="label" style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px; display: block;">Speed</label>
+                        <div class="range-container" style="display: flex; align-items: center; gap: 12px;">
+                            <input type="range" id="speed-slider" min="0.5" max="2.5" step="0.1" value="1.0" style="flex: 1; accent-color: var(--accent-color); cursor: pointer;">
+                            <span id="speed-val" class="value" style="color: var(--accent-color); font-weight: 500; font-size: 12px;">1.0x</span>
+                        </div>
+                    </div>
+                    <div class="setting-item" style="margin-top: 12px; display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                        <label for="assistive-toggle" class="label" style="font-size: 11px; color: var(--text-muted); cursor: pointer;">Audible Status Alerts</label>
+                        <input type="checkbox" id="assistive-toggle" style="cursor: pointer; accent-color: var(--accent-color);">
                     </div>
                 </div>
             </div>
+            <!-- ARIA Announcer for Assistive Mode -->
+            <div aria-live="assertive" id="sr-announcer" style="position: absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip: rect(0,0,0,0); border:0;"></div>
+
+
 
             <div class="actions">
-                <button id="btn-read" class="btn btn-primary">📖 Activate Read Mode</button>
-                <button id="btn-sync" class="btn btn-secondary">🔗 Sync to App</button>
+                <button id="btn-read" class="btn btn-primary">📖 Speak Selection</button>
+                <button id="btn-sync" class="btn btn-secondary">Stop</button>
             </div>
         </main>
 

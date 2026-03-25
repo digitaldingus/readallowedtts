@@ -1,13 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "ReadAllowed",
-  "version": "0.1.0",
-  "description": "An extension for Antigravity to enhance reading and interaction.",
+  "name": "ReadAllowed TTS",
+  "version": "1.2.0",
+
+
+  "description": "High-performance TTS for Antigravity. Press Ctrl+Shift+S to auto-read text.",
+
   "permissions": [
     "activeTab",
     "scripting",
     "storage",
-    "nativeMessaging"
+    "tts"
   ],
   "background": {
     "service_worker": "background.js"
@@ -22,10 +25,27 @@
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png",
       "128": "icons/128.png"
     }
   },
   "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
     "128": "icons/128.png"
+  },
+
+  "commands": {
+    "read-highlight": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+
+      "description": "Read highlighted text out loud"
+    }
   }
 }

@@ -1,0 +1,3 @@
+❌  Extension digitaldingus.read-allowed 2.3.7 is already published.
+See the documentation for more information:
+https://github.com/eclipse/openvsx/wiki/Publishing-Extensions

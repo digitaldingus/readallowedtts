@@ -1,0 +1,1 @@
+ ERROR  SVGs are restricted in README.md; please use other file image formats, such as PNG: https://raw.githubusercontent.com/microsoft/vscode-codicons/main/src/icons/megaphone.svg
