@@ -44,7 +44,7 @@ In Open VSX Marketplace? Just click **Install**!
 ---
 
 ### 💻 **Manual Installation**
-If you prefer to install it manually using are `.vsix` bundle:
+If you prefer to install it manually using a `.vsix` bundle:
 1.  Run `npx vsce package` in this directory to generate a `.vsix` bundle.
 2.  Go to **Extensions** sidebar in your IDE.
 3.  Click Options menu (`...`) -> **Install from VSIX**.
