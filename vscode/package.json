@@ -72,7 +72,17 @@
         "read-allowed.voice": {
           "type": "string",
           "default": "",
-          "description": "The exact name of the installed voice (e.g., 'Microsoft David')."
+          "enum": [
+            "",
+            "Microsoft David Desktop",
+            "Microsoft Zira Desktop"
+          ],
+          "enumDescriptions": [
+            "Default System Voice",
+            "Male Voice (David)",
+            "Female Voice (Zira)"
+          ],
+          "description": "Select the voice synthesis engine. (Available options based on standard Windows installation)"
         },
         "read-allowed.assistiveMode": {
           "type": "boolean",
